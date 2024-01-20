@@ -34,6 +34,11 @@ DirectLink is a purpose-built file-sharing application, tailored for local and r
 - **Persistent Sharings:**
   - Save created sharings on your device, ensuring persistence across application sessions.
 
+## Important Note:
+
+- **Link Validity:**
+  - **ATTENTION:** The links generated for shared directories will stop working when the application is stopped. Please ensure the application is running for uninterrupted access to shared content.
+
 ## Why DirectLink?
 
 DirectLink simplifies local and remote file sharing, offering a streamlined solution for developers and teams working on resource-intensive projects. Say goodbye to complex uploads and downloads – collaborate efficiently with DirectLink.
