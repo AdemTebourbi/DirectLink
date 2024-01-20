@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create New Sharing</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 30vw;
+      display: inline-block;
+    }
+
+    h1 {
+      color: #27ae60;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #27ae60;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: calc(100% - 20px);
+      margin-top: 15px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #219f56;
+    }
+
+    a {
+      display: block;
+      text-decoration: none;
+      color: #3498db;
+      margin-top: 10px;
+      clear: both; /* Ensure the link is below the form */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form id="createSharingForm" action="/create-sharing" method="post">
+      <h1>Create New Sharing</h1>
+      
+      <label for="sharingName">Sharing Name:</label>
+      <input type="text" id="sharingName" name="sharingName" required>
+      
+      <label for="sharingDirectory">Sharing Directory:</label>
+      <input type="text" id="sharingDirectory" name="sharingDirectory" required>
+      
+      <label for="sharingPassword">Password:</label>
+      <input type="password" id="sharingPassword" name="sharingPassword" required>
+      
+      <button type="submit">Create Sharing</button>
+    </form>
+
+    <a href="/">Back to Administration</a>
+  </div>
+
+  <!-- Add jQuery library -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- ... your existing HTML ... -->
+
+<script>
+    $(document).ready(function() {
+      $('#createSharingForm').submit(function(event) {
+        event.preventDefault();
+  
+        var sharingData = {
+          sharingName: $('#sharingName').val(),
+          sharingDirectory: $('#sharingDirectory').val(),
+          sharingPassword: $('#sharingPassword').val()
+        };
+  
+        $.ajax({
+          type: 'POST',
+          url: '/create-sharing',
+          contentType: 'application/json',
+          data: JSON.stringify(sharingData),
+          success: function(response) {
+            console.log(response);
+  
+            // Show an alert to the user with the server response message
+            alert(response.alert || 'Sharing data received successfully');
+  
+            // Redirect the user to the administration page
+            window.location.href = '/';
+          },
+          error: function(error) {
+            console.error('Error creating sharing:', error);
+  
+            // Show an alert to the user with an error message
+            alert('Error creating sharing. Please try again.');
+          }
+        });
+      });
+    });
+  </script>
+  
+  <!-- ... your existing HTML ... -->
+  
+</body>
+</html>

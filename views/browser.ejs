@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Browser</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f1f1f1;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .item {
+      box-sizing: border-box;
+      width: 200px;
+      padding: 10px;
+      margin: 10px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .item img {
+      max-width: 100%;
+      /* Limit image width to 100% of the container */
+      max-height: 100px;
+      /* Adjust the max height as needed */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="fileBrowser">
+    <!-- Content will be dynamically generated here -->
+    <% directoryContent.forEach(item=> { %>
+      <div class="item <%= item.type %>"
+        onclick="<%= item.type === 'file' ? `downloadFile('${item.name}')` : `openFolder('${item.name}')` %>">
+        <img
+          src="<%= item.type === 'folder' ? 'folder-icon.png' : extensionToImagePath[item.extension] || 'file-icon.png' %>"
+          alt="<%= item.name %>">
+        <div>
+          <%= item.name %>
+        </div>
+      </div>
+      <% }) %>
+
+
+        <script>
+          function downloadFile(fileName) {
+            // Redirect to the download link for the file
+            window.location.href = `/download?fileName=${fileName}&traveledPath=<%= traveledPath %>&sharingId=<%= sharingId %>`;
+          }
+
+          function openFolder(folderName) {
+            // Redirect to the explore-sharing page for the selected folder
+            window.location.href = `/?traveledPath=<%= traveledPath ? traveledPath + '/' : '' %>${folderName}&sharingId=<%= sharingId %>`;
+          }
+        </script>
+
+        <script>
+          async function verifyPass(id, password) {
+            try {
+              const response = await fetch('/check-password', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id, password }),
+              });
+
+              const data = await response.json();
+
+              if (data.success) {
+                return true;
+              } else {
+                return false;
+              }
+            } catch (error) {
+              console.error('Error checking password:', error.message);
+              return false;
+            }
+          }
+          async function getAccess() {
+            const sharingId = '<%= sharingId %>';
+            const storedPassword = sessionStorage.getItem('password');
+
+            if (!(await verifyPass(sharingId, storedPassword))) {
+              const enteredPassword = prompt('Please enter the password:');
+
+              if (await verifyPass(sharingId, enteredPassword)) {
+                sessionStorage.setItem('password', enteredPassword);
+              } else {
+                window.alert('Incorrect Password!');
+                await getAccess();
+              }
+            }
+          }
+          // Call the function to initiate the access check
+          getAccess();
+        </script>
+  </div>
+</body>
+
+</html>

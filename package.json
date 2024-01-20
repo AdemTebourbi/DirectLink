@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "axios": "^0.27.2 ",
+    "body-parser": "^1.20.2",
+    "cheerio": "^1.0.0-rc.12",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2"
+  },
+  "name": "directlink",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node ./index.js"
+  }
+  ,
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "pkg": {
+    "assets": [
+      "./node_modules/**/*",
+      "./views/**/*",
+      "./images/**/*"
+    ]
+  }
+}
