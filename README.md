@@ -1,5 +1,5 @@
 # DirectLink
-Direct Link Application Summary:
+**Direct Link Application Summary:**
 
 Direct Link is a file-sharing application designed for local network use. It opens two HTTP services, one for administration (port 3000) and another for accessing shared files (port 3001). Users set up the application by creating a virtual server on port 3001 in their router settings.
 
