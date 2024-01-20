@@ -23,6 +23,39 @@ DirectLink is a purpose-built file-sharing application, tailored for local and r
    - Direct Link revolutionizes collaboration for developers working with large files.
    - Eliminate the need for file uploads to external platforms. Instead, share directories directly from your computer.
 
+## Running the App from Source Code
+
+To run the application from its source code, follow these steps:
+
+1. **Clone the Repository:**
+   - Clone the DirectLink repository to your local machine using the command:
+     ```bash
+     git clone https://github.com/your-username/DirectLink.git
+     ```
+
+2. **Navigate to the Project Directory:**
+   - Change into the project directory:
+     ```bash
+     cd DirectLink
+     ```
+
+3. **Install Dependencies:**
+   - Install the required dependencies using:
+     ```bash
+     npm install
+     ```
+
+4. **Run the Application:**
+   - Start the application by running the following command:
+     ```bash
+     node index.js
+     ```
+
+5. **Access the Application:**
+   - Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to access the DirectLink Administration interface.
+
+Now you can enjoy seamless file sharing with DirectLink directly from the source code.
+
 ## Key Features
 
 - **Local & Remote Access:**
