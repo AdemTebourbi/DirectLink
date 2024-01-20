@@ -30,7 +30,7 @@ To run the application from its source code, follow these steps:
 1. **Clone the Repository:**
    - Clone the DirectLink repository to your local machine using the command:
      ```bash
-     git clone https://github.com/your-username/DirectLink.git
+     git clone https://github.com/AdemTebourbi/DirectLink.git
      ```
 
 2. **Navigate to the Project Directory:**
