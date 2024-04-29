@@ -30,7 +30,7 @@ const app1 = express();
 app1.use(express.static('public'));
 app1.use(bodyParser.json());
 app1.set('view engine', 'ejs');
-
+app1.use('/images', express.static('views/images'));
 app1.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/index.html');
 });
@@ -171,6 +171,11 @@ app2.get('/', (req, res) => {
         return;
     }
 
+    if (traveledPath.includes(".")) {
+        res.status(404).json({ message: 'Traveled Path Refused' });
+        return;
+    }
+
     // Build the full path to the requested directory
     const requestedPath = path.join(selectedSharing.sharingDirectory, traveledPath);
 
@@ -245,20 +250,28 @@ app2.get('/download', (req, res) => {
     const selectedSharing = sharingData[sharingId];
 
     if (!selectedSharing) {
-        res.status(404).json({ message: 'Sharing not found' });
-        return;
+        return res.status(404).json({ message: 'Sharing not found' });
     }
 
     const filePath = path.join(selectedSharing.sharingDirectory, traveledPath, fileName);
 
-    // Send the file for download
-    res.download(filePath, fileName, (err) => {
-        if (err) {
-            console.error('Error sending file:', err);
-            res.status(500).json({ message: 'Error sending file' });
-        }
-    });
+    // Check if the file exists
+    if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ message: 'File not found' });
+    }
+
+    // Set appropriate headers for file download
+    res.setHeader('Content-disposition', `attachment; filename=${fileName}`);
+    res.setHeader('Content-type', 'application/octet-stream');
+
+    // Create a readable stream from the file
+    const fileReadStream = fs.createReadStream(filePath);
+
+    // Pipe the file stream to the response stream
+    fileReadStream.pipe(res);
 });
+
+
 
 
 function checkPassword(sharingId, enteredPassword) {

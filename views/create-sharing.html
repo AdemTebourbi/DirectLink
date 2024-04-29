@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,87 +8,121 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #f8f9fa;
       margin: 0;
       padding: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
+      background-image: url('/images/image1.jpg');
+      /* Set the background image */
+      background-size: cover;
+      /* Cover the entire background */
+      background-position: center;
+      /* Center the background image */
     }
 
     .container {
-      text-align: center;
+      text-align: left;
+      /* Align labels to the left */
     }
 
     form {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      width: 30vw;
-      display: inline-block;
+      background: linear-gradient(135deg, #ffffff, #f0f0f0);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      width: 40vw;
+      max-width: 600px;
+      animation: slideIn 0.5s ease-in-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     h1 {
-      color: #27ae60;
+      color: #2c3e50;
       margin-bottom: 20px;
     }
 
     label {
       display: block;
-      margin-top: 15px;
+      margin-top: 25px;
       font-weight: bold;
+      color: #34495e;
+      font-size: 16px;
     }
 
     input {
-      width: calc(100% - 20px);
-      padding: 10px;
-      margin-top: 5px;
+      width: 100%;
+      padding: 15px;
+      margin-top: 10px;
       box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      border: 2px solid #bdc3c7;
+      border-radius: 8px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus {
+      border-color: #3498db;
+      outline: none;
+      box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
     }
 
     button {
-      background-color: #27ae60;
+      background-color: #3498db;
       color: #fff;
-      padding: 10px;
+      padding: 15px 20px;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
-      width: calc(100% - 20px);
-      margin-top: 15px;
+      width: 100%;
+      margin-top: 25px;
       transition: background-color 0.3s;
     }
 
     button:hover {
-      background-color: #219f56;
+      background-color: #2980b9;
     }
 
     a {
       display: block;
       text-decoration: none;
-      color: #3498db;
-      margin-top: 10px;
-      clear: both; /* Ensure the link is below the form */
+      color: #2980b9;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    a:hover {
+      color: #1a5276;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <form id="createSharingForm" action="/create-sharing" method="post">
       <h1>Create New Sharing</h1>
-      
+
       <label for="sharingName">Sharing Name:</label>
-      <input type="text" id="sharingName" name="sharingName" required>
-      
+      <input type="text" id="sharingName" name="sharingName" required placeholder="Enter sharing name"
+        value="Default Name" required>
+
       <label for="sharingDirectory">Sharing Directory:</label>
       <input type="text" id="sharingDirectory" name="sharingDirectory" required>
-      
+
       <label for="sharingPassword">Password:</label>
       <input type="password" id="sharingPassword" name="sharingPassword" required>
-      
+
       <button type="submit">Create Sharing</button>
     </form>
 
@@ -97,36 +132,36 @@
   <!-- Add jQuery library -->
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<!-- ... your existing HTML ... -->
+  <!-- ... your existing HTML ... -->
 
-<script>
-    $(document).ready(function() {
-      $('#createSharingForm').submit(function(event) {
+  <script>
+    $(document).ready(function () {
+      $('#createSharingForm').submit(function (event) {
         event.preventDefault();
-  
+
         var sharingData = {
           sharingName: $('#sharingName').val(),
           sharingDirectory: $('#sharingDirectory').val(),
           sharingPassword: $('#sharingPassword').val()
         };
-  
+
         $.ajax({
           type: 'POST',
           url: '/create-sharing',
           contentType: 'application/json',
           data: JSON.stringify(sharingData),
-          success: function(response) {
+          success: function (response) {
             console.log(response);
-  
+
             // Show an alert to the user with the server response message
             alert(response.alert || 'Sharing data received successfully');
-  
+
             // Redirect the user to the administration page
             window.location.href = '/';
           },
-          error: function(error) {
+          error: function (error) {
             console.error('Error creating sharing:', error);
-  
+
             // Show an alert to the user with an error message
             alert('Error creating sharing. Please try again.');
           }
@@ -134,8 +169,9 @@
       });
     });
   </script>
-  
+
   <!-- ... your existing HTML ... -->
-  
+
 </body>
+
 </html>
